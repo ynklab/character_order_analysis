@@ -6,24 +6,62 @@ Appear in the 12th Joint Conference on Lexical and Computational Semantics (\*SE
 
 ## Usage
 ### Directory setups
-* First of all, you have to follow the setups on [Neural DRS parsing](https://github.com/RikVN/Neural_DRS/) and [AllenNLP experiments](https://github.com/RikVN/Neural_DRS/blob/master/AllenNLP.md) in the repository.
-* Then, you need Parallel Meaning Bank (version 3.0.0) data for experiments.
-Please install `exp_data_3.0.0.zip` from [https://pmb.let.rug.nl/releases/], unzip and locate it in `data`.
+1. First of all, clone this repository.
+```
+git clone https://github.com/ynklab/character_order_analysis.git
+```
+
+2. Follow the setups on [Neural DRS parsing](https://github.com/RikVN/Neural_DRS/) and [AllenNLP experiments](https://github.com/RikVN/Neural_DRS/blob/master/AllenNLP.md) in the repository.
+```
+cd character_order_analysis
+git clone https://github.com/RikVN/Neural_DRS.git
+
+# setups for Neural_DRS
+cd Neural_DRS
+git clone https://github.com/RikVN/DRS_parsing.git
+cd DRS_parsing
+git checkout v.3.0.0
+pip install -r requirements.txt
+pip install scipy
+pip install matplotlib
+cd ..
+
+# setups for AllenNLP experiments
+git clone https://github.com/RikVN/allennlp
+cd allennlp
+git checkout DRS
+pip install --editable .
+cd ..
+```
+
+3. Copy directories in `character_order_analysis` into `Neural_DRS`. (the `coa_data` directory will be copied by `concat_data.sh`)
+```
+cp -r coa_config Neural_DRS/
+cp -r coa_src Neural_DRS/
+```
+
+4. Download Parallel Meaning Bank (version 3.0.0) data for experiments.
+Please install `exp_data_3.0.0.zip` from https://pmb.let.rug.nl/releases/, unzip and locate it in `data`.
+```
+cd data
+wget https://pmb.let.rug.nl/releases/exp_data_3.0.0.zip
+unzip exp_data_3.0.0.zip
+```
 
 ### Data creation
-1. Concat `exp_data_3.0.0` data in `data`.
+1. Concat `pmb_exp_data_3.0.0` data in `data`.
 ```
-./orig_src/concat_data.sh
+./coa_src/concat_data.sh
 ```
 2. Generate files for experiments followed [AllenNLP experiments](https://github.com/RikVN/Neural_DRS/blob/master/AllenNLP.md).
 ```
-./orig_src/preprocess.sh
+./coa_src/preprocess.sh
 ```
 3. Generate files for experiments in our paper.
 This script generates six character files for each div and split: normal (sent), shuffle.intoken, shuffle.inline, random, unify, and 2gram.
 You can set n for ngrams as command line arguments. The default value is 2.
 ```
-python orig_src/generate_char_file.py
+python coa_src/generate_char_file.py
 ```
 
 ### Run experiments
@@ -39,7 +77,7 @@ For example, if you want to run an experiment using normal character files, run 
 
 ### Evaluation
 We used DRS Jury.
-See [DRS Jury](https://github.com/RikVN/Neural_DRS/blob/master/DRS_jury.md) by van Noord for more detail.
+See [DRS Jury](https://github.com/RikVN/Neural_DRS/blob/master/DRS_jury.md) for more detail.
 
 
 ## Citation
@@ -64,7 +102,7 @@ Association for Computational Linguistics.
 
 
 ## Contact
-For questions and usage issues, please contact [kurosawa-tomoya@is.s.u-tokyo.ac.jp] .
+For questions and usage issues, please contact kurosawa-tomoya@is.s.u-tokyo.ac.jp .
 
 
 ## License

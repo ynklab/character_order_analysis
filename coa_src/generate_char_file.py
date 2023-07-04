@@ -118,14 +118,14 @@ def shuffle_inline(lang, div, split):
 
     output_sents = []
     for sent in input_sents:
-        output_sents.append(shuffle(output_sent))
+        output_sents.append(shuffle(sent))
 
-    with open(output_file, "w") as f:
-        for sent in ouy_sents:
+    with open(out_file, "w") as f:
+        for sent in output_sents:
             print(' '.join(sent), file=f)
 
 
-def random(lang, div, split):
+def gen_random(lang, div, split):
     in_file = f"data/{lang}/{div}/{split}.txt.raw.char.sent"
     out_file = f"data/{lang}/{div}/{split}.txt.raw.char.random"
     input_sents = []
@@ -174,15 +174,16 @@ def ngram(lang, div, split, n=1):
     else:
         out_file = f"data/{lang}/{div}/{split}.txt.raw.char.{n}gram"
     with open(in_file, "r") as f:
-        input_sents = [list(s.strip().split(' ')) for s in f.readlines()]
+        input_sents = [s.strip() for s in f.readlines()]
 
     output_sents = []
     for sent in input_sents:
         output_sent = []
-        for i in range(len(sent) - n + 1):
+        in_chars = sent_to_chars(sent)
+        for i in range(len(in_chars) - n + 1):
             temp_chars = ""
             for j in range(n):
-                temp_chars += sent[i + j]
+                temp_chars += in_chars[i + j]
             output_sent.append(temp_chars)
         output_sents.append(output_sent)
 
@@ -216,6 +217,7 @@ def unified_gold_silver_bronze(ext, lang):
         for i in range(N_gs):
             print(input_sents[i], file=f)
 
+    """
     output_file = f"data/{lang}/gold/train.txt.raw.char.{ext}"
     with open(output_file, "r") as f:
         N_g = len([s.strip() for s in f.readlines()])
@@ -232,6 +234,7 @@ def unified_gold_silver_bronze(ext, lang):
     with open(output_file, "w") as f:
         for i in range(N_g, N_gs):
             print(input_sents[i], file=f)
+    """
 
 
 def unified_silver_bronze(ext, lang):
@@ -266,7 +269,7 @@ def generate_distorted_char(lang):
     for div, split in DIV_SPLIT_DICT[lang]:
         shuffle_intoken(lang, div, split)
         shuffle_inline(lang, div, split)
-        random(lang, div, split)
+        gen_random(lang, div, split)
         unify(lang, div, split)
     for ext in exts:
         concat_file(ext, lang)
@@ -283,7 +286,7 @@ def main(args):
     for lang in LANGUAGES:
         generate_normal_char(lang)
         generate_distorted_char(lang)
-        generate_ngram(args.ngram)
+        generate_ngram(lang, args.ngram)
 
 
 if __name__ == "__main__":
