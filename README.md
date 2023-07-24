@@ -88,16 +88,20 @@ In *Proceedings of the 12th Joint Conference on Lexical and Computational Semant
 Association for Computational Linguistics.
 
 ```
-@Inproceedings{kurosawa-yanaka-2023-character,
-    title = "Does Character-level Information Always Improve DRS-based Semantic Parsing?",
+@inproceedings{kurosawa-yanaka-2023-character,
+    title = "Does Character-level Information Always Improve {DRS}-based Semantic Parsing?",
     author = "Kurosawa, Tomoya  and
       Yanaka, Hitomi",
-    booktitle = "Proceedings of the 12th Joint Conference on Lexical and Computational Semantics",
-    month = "jul",
+    booktitle = "Proceedings of the The 12th Joint Conference on Lexical and Computational Semantics (*SEM 2023)",
+    month = jul,
     year = "2023",
-    address = "Toronto, Ontario",
+    address = "Toronto, Canada",
     publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2023.starsem-1.23",
+    pages = "249--258",
+    abstract = "Even in the era of massive language models, it has been suggested that character-level representations improve the performance of neural models. The state-of-the-art neural semantic parser for Discourse Representation Structures uses character-level representations, improving performance in the four languages (i.e., English, German, Dutch, and Italian) in the Parallel Meaning Bank dataset. However, how and why character-level information improves the parser{'}s performance remains unclear. This study provides an in-depth analysis of performance changes by order of character sequences. In the experiments, we compare F1-scores by shuffling the order and randomizing character sequences after testing the performance of character-level information. Our results indicate that incorporating character-level information does not improve the performance in English and German. In addition, we find that the parser is not sensitive to correct character order in Dutch. Nevertheless, performance improvements are observed when using character-level information.",
 }
+
 ```
 
 
